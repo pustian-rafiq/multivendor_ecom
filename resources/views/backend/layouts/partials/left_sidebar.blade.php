@@ -72,19 +72,23 @@
               <p>Inbox</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="pages/mailbox/compose.html" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Compose</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/mailbox/read-mail.html" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Read</p>
-            </a>
-          </li>
         </ul>
+      </li>
+
+      <li class="nav-header">Profile Setting</li>
+      <li class="nav-item">
+       
+        <a class="nav-link" href="{{ route('logout') }}"
+        onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">
+                       <i class="nav-icon far fa-envelope"></i>
+         {{ __('Logout') }}
+     </a>
+
+     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+         @csrf
+     </form>
+
       </li>
     </ul>
   </nav>
