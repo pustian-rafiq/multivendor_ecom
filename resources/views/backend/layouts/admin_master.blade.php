@@ -84,6 +84,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
+
 <script src="{{ asset('backend/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('backend/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
@@ -125,6 +126,9 @@
 <script src="{{ asset('backend/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{ asset('backend/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{ asset('backend/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
+<!-- switch button js -->
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>  
 
 <!-- AdminLTE App -->
 <script src="{{ asset('backend/dist/js/adminlte.js')}}"></script>

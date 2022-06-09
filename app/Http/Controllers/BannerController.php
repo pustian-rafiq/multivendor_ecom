@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 class BannerController extends Controller
 {
@@ -70,6 +71,16 @@ class BannerController extends Controller
        }else{
            return back()->with('error','Something went wrong');
        }
+    }
+    // Chnage banner status
+    public function ChangeStatus(Request $request){
+       
+        if($request->mode =='true'){
+            DB::table('banners')->where('id',$request->id)->update(['status'=>'active']);
+        }else{
+            DB::table('banners')->where('id',$request->id)->update(['status'=>'inactive']);
+        }
+        return response()->json(['msg'=>'Status updated successfully','status'=>true]);
     }
 
     /**

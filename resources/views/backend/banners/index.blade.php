@@ -1,5 +1,5 @@
 @extends('backend.layouts.admin_master');
-
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css" rel="stylesheet">
 @section('content')
 <section class="content">
     <div class="container-fluid">
@@ -32,13 +32,24 @@
                 <tr>
                   <td>{{ $key+1}}</td>
                   <td>{{ $banner->title}}</td>
-                  <td>{{ $banner->slug}}</td>
                   <td>{{ $banner->description}}</td>
                   <td>
                     <img src="{{ $banner->photo}}" alt="Banner" height="70" width="70" />
                   </td>
-                  <td>{{ $banner->condition}}</td>
-                  <td>{{ $banner->status}}</td>
+                  <td> 
+                    @if($banner->status == 'banner')
+                     <span class="badge badge-success">{{ $banner->condition }}</span>
+                    @else
+                    <span class="badge badge-primary">{{ $banner->condition }}</span>
+                    @endif
+                  </td>
+                  <td>
+                    <input type="checkbox" name="toogle" value="{{ $banner->id }}" data-toggle="switchbutton" {{ ($banner->status =='active' ? 'checked' : '') }} data-onlabel="Active" data-size="sm" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger">
+                  </td>
+                  <td>
+                    <a href="" class="btn btn-success">Edit</a>
+                    <a href="" class="btn btn-danger">Delete</a>
+                  </td>
                 </tr>
                 @endforeach
                 
@@ -61,4 +72,30 @@
     </div><!-- /.container-fluid -->
   </section>
 
+@endsection
+@section('scripts')
+<script>
+  $('input[name=toogle]').change(function(){
+    var mode = $(this).prop('checked')
+    var id= $(this).val()
+     //alert(id)
+    $.ajax({
+      url: "{{ route('banner.status')}}",
+      type: "POST",
+      data: {
+        _token: '{{csrf_token()}}',
+        mode: mode,
+        id: id
+      },
+      success: function(response){
+        
+        if(response.status){
+          alert(response.msg)
+        }else{
+          alert("Try again")
+        }
+      }
+    })
+  })
+</script>
 @endsection
