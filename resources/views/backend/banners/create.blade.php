@@ -3,19 +3,18 @@
  <link rel="stylesheet" href="{{ asset('backend/plugins/summernote/summernote-bs4.min.css') }}">
 @section('content')
 <section class="content">
-  {{-- Show error or succes notification --}}
-  <div class="col-12">
-    @include('backend.layouts.notifications')
-  </div>
 
   {{-- Show validations error --}}
   <div class="col-12">
     @if($errors->any())
-    <ul>
-      @foreach ($errors as $error)
-          <li>{{ $error}}</li>
-      @endforeach
-    </ul>
+    <div class="alert alert-danger">
+
+      <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error}}</li>
+        @endforeach
+      </ul>
+    </div>
     @endif
   </div>
 

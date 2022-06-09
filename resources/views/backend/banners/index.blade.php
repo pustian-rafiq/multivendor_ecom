@@ -4,6 +4,11 @@
 <section class="content">
     <div class="container-fluid">
         <div class="card">
+            {{-- Show error or succes notification --}}
+                <div class="col-12">
+                  @include('backend.layouts.notifications')
+                </div>
+
             <div class="card-header">
               <h3 class="card-title">All Banners</h3>
               <a href="{{ route('banner.create') }}" class="btn btn-success" style="float:right">Add Banner</a>

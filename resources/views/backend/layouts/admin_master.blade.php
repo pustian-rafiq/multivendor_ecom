@@ -143,5 +143,12 @@
   });
 </script>
 
+<!-- Success and errors alert dimissable -->
+<script>
+  setTimeout(() => {
+    $('#alert').slideUp();
+  }, 4000);
+</script>
+
 </body>
 </html>
