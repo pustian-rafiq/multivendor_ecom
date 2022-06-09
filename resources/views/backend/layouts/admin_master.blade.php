@@ -132,8 +132,8 @@
 <script src="{{ asset('backend/dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('backend/dist/js/pages/dashboard.js')}}"></script>
-
-
+@yield('scripts')
+<!-- Data table script -->
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -142,5 +142,6 @@
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
+
 </body>
 </html>
