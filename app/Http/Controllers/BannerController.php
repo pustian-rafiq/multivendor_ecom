@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Banner;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class BannerController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        return view('backend.banners.index');
+        $banners = Banner::latest()->get();
+        return view('backend.banners.index',compact('banners'));
     }
 
     /**
@@ -34,7 +36,40 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       // return $request->all();
+        $this->validate($request,[
+            'title' => 'string|required',
+            'description' => 'required',
+            'photo' => 'required',
+            'condition' => 'nullable|in:banner,promo',
+            'status' => 'nullable|in:active,inactive',
+        ]);
+
+        $data = new Banner();
+
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->photo = $request->photo;
+        $data->condition = $request->condition;
+        $data->status = $request->status;
+       
+       $slug = Str::slug($request->title);
+
+        $data->slug =  $slug;
+
+        //return $data;
+        $existingSlug = Banner::where('slug',$slug)->count();
+
+        if($existingSlug){
+            $slug = time().'-'.$slug;
+        } 
+
+       $result = $data->save();
+       if($result){
+        return redirect()->route('banner.index')->with('success','Banner inserted successfully');
+       }else{
+           return back()->with('error','Something went wrong');
+       }
     }
 
     /**
