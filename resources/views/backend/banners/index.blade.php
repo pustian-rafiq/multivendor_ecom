@@ -48,7 +48,12 @@
                   </td>
                   <td>
                     <a href="{{ route('banner.edit',$banner->id) }}" class="btn btn-success">Edit</a>
-                    <a href="" class="btn btn-danger">Delete</a>
+                    <form action="{{ route('banner.destroy',$banner->id) }}" method="post">
+                      @csrf
+                      @method('delete')
+                      <a href="" data-id="{{ $banner->id }}" title="Delete" data-toggle="tooltip" class="btn btn-danger deleteBtn">Delete</a>
+                    </form>
+                  
                   </td>
                 </tr>
                 @endforeach
@@ -74,6 +79,40 @@
 
 @endsection
 @section('scripts')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!--Banner delete section-->
+<script>
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF_TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      })
+      $('.deleteBtn').click(function(e){
+        var form = $(this).closest('form')
+        var dataId = $(this).data('id')
+        e.preventDefault()
+        swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        form.submit()
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+  })
+</script>
+
+<!--Status change script-->
 <script>
   $('input[name=toogle]').change(function(){
     var mode = $(this).prop('checked')
