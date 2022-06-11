@@ -86,6 +86,30 @@
         </ul>
       </li>
 
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="nav-icon far fa-envelope"></i>
+          <p>
+            Category Management
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{ route('category.index') }}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>All Categories</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('category.create') }}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Add Category</p>
+            </a>
+          </li>
+        </ul>
+      </li>
+
       <li class="nav-header">Profile Setting</li>
       <li class="nav-item">
        

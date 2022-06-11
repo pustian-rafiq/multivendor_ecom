@@ -1,5 +1,7 @@
 @extends('backend.layouts.admin_master');
+
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css" rel="stylesheet">
+
 @section('content')
 <section class="content">
     <div class="container-fluid">
@@ -10,8 +12,8 @@
                 </div>
 
             <div class="card-header">
-              <h3 class="card-title">All Banners</h3>
-              <a href="{{ route('banner.create') }}" class="btn btn-success" style="float:right">Add Banner</a>
+              <h3 class="card-title">All Categories</h3>
+              <a href="{{ route('category.create') }}" class="btn btn-success" style="float:right">Add Category</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -20,38 +22,32 @@
                 <tr>
                   <th>Sl No.</th>
                   <th>Title</th>
-                  <th>Description</th>
                   <th>Photo</th>
-                  <th>Condition</th>
+                  <th>IsParent</th>
+                  <th>Parents</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($banners as $key => $banner)
+                @foreach($categories as $key => $category)
                 <tr>
                   <td>{{ $key+1}}</td>
-                  <td>{{ $banner->title}}</td>
-                  <td>{{ $banner->description}}</td>
+                  <td>{{ $category->title}}</td>
                   <td>
-                    <img src="{{ $banner->photo}}" alt="Banner" height="70" width="70" />
+                    <img src="{{ $category->photo}}" alt="Banner" height="70" width="70" />
                   </td>
-                  <td> 
-                    @if($banner->status == 'banner')
-                     <span class="badge badge-success">{{ $banner->condition }}</span>
-                    @else
-                    <span class="badge badge-primary">{{ $banner->condition }}</span>
-                    @endif
+                  <td>{{ $category->is_parent}}</td>
+                  <td>{{ $category->parent_id}}</td>
+                  <td>
+                    <input type="checkbox" name="toogle" value="{{ $category->id }}" data-toggle="switchbutton" {{ ($category->status =='active' ? 'checked' : '') }} data-onlabel="Active" data-size="sm" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger">
                   </td>
                   <td>
-                    <input type="checkbox" name="toogle" value="{{ $banner->id }}" data-toggle="switchbutton" {{ ($banner->status =='active' ? 'checked' : '') }} data-onlabel="Active" data-size="sm" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger">
-                  </td>
-                  <td>
-                    <a href="{{ route('banner.edit',$banner->id) }}" class="float-left btn btn-success mr-1">Edit</a>
-                    <form action="{{ route('banner.destroy',$banner->id) }}" method="post">
+                    <a href="{{ route('category.edit',$category->id) }}" class="float-left btn btn-success mr-1">Edit</a>
+                    <form action="{{ route('category.destroy',$category->id) }}" method="post">
                       @csrf
                       @method('delete')
-                      <a href="" data-id="{{ $banner->id }}" title="Delete" data-toggle="tooltip" class="btn btn-danger deleteBtn float-left">Delete</a>
+                      <a href="" data-id="{{ $category->id }}" title="Delete" data-toggle="tooltip" class="btn btn-danger deleteBtn float-left">Delete</a>
                     </form>
                   </td>
                 </tr>
@@ -62,9 +58,9 @@
                 <tr>
                   <th>Sl No.</th>
                   <th>Title</th>
-                  <th>Description</th>
                   <th>Photo</th>
-                  <th>Condition</th>
+                  <th>IsParent</th>
+                  <th>Parents</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
