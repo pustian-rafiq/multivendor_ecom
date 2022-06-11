@@ -102,7 +102,8 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = Banner::find($id);
+        return view('backend.banners.edit',compact('banner'));
     }
 
     /**
@@ -114,7 +115,34 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Banner::find($id);
+        if($data){
+            $this->validate($request,[
+                'title' => 'string|required',
+                'description' => 'required',
+                'photo' => 'required',
+                'condition' => 'nullable|in:banner,promo',
+            ]);
+    
+            $data->title = $request->title;
+            $data->description = $request->description;
+            $data->photo = $request->photo;
+            $data->condition = $request->condition;
+           
+           $slug = Str::slug($request->title);
+    
+            $data->slug =  $slug;
+    
+           $result = $data->save();
+           //This proces is used when we delete the image from public and storage folder
+           unlink(public_path($request->old_photo));
+           if($result){
+            return redirect()->route('banner.index')->with('success','Banner updated successfully');
+           }else{
+               return back()->with('error','Something went wrong');
+           }
+        }
+        
     }
 
     /**

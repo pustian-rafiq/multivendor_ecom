@@ -47,7 +47,7 @@
                     <input type="checkbox" name="toogle" value="{{ $banner->id }}" data-toggle="switchbutton" {{ ($banner->status =='active' ? 'checked' : '') }} data-onlabel="Active" data-size="sm" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger">
                   </td>
                   <td>
-                    <a href="" class="btn btn-success">Edit</a>
+                    <a href="{{ route('banner.edit',$banner->id) }}" class="btn btn-success">Edit</a>
                     <a href="" class="btn btn-danger">Delete</a>
                   </td>
                 </tr>
