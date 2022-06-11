@@ -33,4 +33,5 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::resource('/banner', 'BannerController');
     Route::resource('/category', 'CategoryController');
     Route::post('/banner/status',[BannerController::class,'ChangeStatus'])->name('banner.status');
+    Route::post('/category/status',[CategoryController::class,'ChangeStatus'])->name('category.status');
 });

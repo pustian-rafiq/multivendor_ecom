@@ -28,6 +28,18 @@ class CategoryController extends Controller
         return view('backend.category.create');
     }
 
+     // Chnage banner status
+     public function ChangeStatus(Request $request){
+       
+        if($request->mode =='true'){
+            DB::table('banners')->where('id',$request->id)->update(['status'=>'active']);
+        }else{
+            DB::table('banners')->where('id',$request->id)->update(['status'=>'inactive']);
+        }
+        return response()->json(['msg'=>'Status updated successfully','status'=>true]);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
