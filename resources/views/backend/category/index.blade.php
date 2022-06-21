@@ -38,7 +38,8 @@
                     <img src="{{ $category->photo}}" alt="Banner" height="70" width="70" />
                   </td>
                   <td>{{ ($category->is_parent == 1? 'Yes' : 'No')}}</td>
-                  <td>{{ $category->parent_id}}</td>
+                  {{-- Category model er vitore parent category o ace. seta dekhanor jonno eta --}}
+                  <td>{{ \App\Category::where('id',$category->parent_id)->value('title') }}</td>
                   <td>
                     <input type="checkbox" name="toogle" value="{{ $category->id }}" data-toggle="switchbutton" {{ ($category->status =='active' ? 'checked' : '') }} data-onlabel="Active" data-size="sm" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger">
                   </td>

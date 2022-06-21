@@ -65,7 +65,7 @@ class CategoryController extends Controller
        $data->title = $request->title;
        $data->summary = $request->summary;
        $data->photo = $request->photo;
-       $data->is_parent = $request->is_parent;
+       $data->is_parent = $request->is_parent ? $request->is_parent : 0;
        $data->parent_id = $request->parent_id;
        $data->status = $request->status;
       
@@ -86,7 +86,6 @@ class CategoryController extends Controller
       }else{
           return back()->with('error','Something went wrong');
       }
-
     }
 
     /**
@@ -108,7 +107,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $parentCategories = Category::where('is_parent',1)->orderBy('title','asc')->get();
+        if($category){
+            return view('backend.category.edit',compact('category','parentCategories'));
+        }else{
+            return "Category not found";
+        }
     }
 
     /**
