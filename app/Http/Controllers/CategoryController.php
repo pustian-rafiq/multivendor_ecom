@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -25,16 +26,17 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create');
+        $parentCategories = Category::where('is_parent',1)->orderBy('title','asc')->get();
+        return view('backend.category.create',compact('parentCategories'));
     }
 
      // Chnage banner status
      public function ChangeStatus(Request $request){
        
         if($request->mode =='true'){
-            DB::table('banners')->where('id',$request->id)->update(['status'=>'active']);
+            DB::table('categories')->where('id',$request->id)->update(['status'=>'active']);
         }else{
-            DB::table('banners')->where('id',$request->id)->update(['status'=>'inactive']);
+            DB::table('categories')->where('id',$request->id)->update(['status'=>'inactive']);
         }
         return response()->json(['msg'=>'Status updated successfully','status'=>true]);
     }

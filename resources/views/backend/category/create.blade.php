@@ -35,6 +35,20 @@
               </div>
             </div>
             <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Photo</label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                      <i class="fa fa-picture-o"></i> Choose
+                    </a>
+                  </span>
+                  <input id="thumbnail" class="form-control" type="text" name="photo">
+                </div>
+                <div id="holder" style="margin-top:25px;max-height:100px;"></div>
+              </div>
+            </div>
+            <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
               <div class="col-sm-10">
                 <div class="card card-outline card-info">
@@ -54,27 +68,23 @@
             </div>
 
             <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Photo</label>
+              <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <span class="input-group-btn">
-                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                      <i class="fa fa-picture-o"></i> Choose
-                    </a>
-                  </span>
-                  <input id="thumbnail" class="form-control" type="text" name="photo">
-                </div>
-                <div id="holder" style="margin-top:25px;max-height:100px;"></div>
+                <label for="inputEmail3" class="">Is Parent</label>
+                <input type="checkbox" name="is_parent" value="1" >Yes
               </div>
             </div>
             
             <div class="form-group row">
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Condition</label>
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Parent Category</label>
               <div class="col-sm-10">
-                <select class="form-control" name="condition">
-                  <option>----select condition---</option>
-                  <option value="banner" {{ old('banner') == 'banner' ? 'selected' : ''}}>Banner</option>
-                  <option value="promo" {{ old('promo') =='promo' ? 'selected' : ''}}>Promote</option>
+                <select class="form-control" name="parent_id">
+                  <option>----select Category---</option>
+                  @foreach ($parentCategories as $item)
+                      
+                   <option value="{{ $item->id}}" {{ old('banner') == 'banner' ? 'selected' : ''}}>{{ $item->title}}</option>
+                  @endforeach
+                  
                 </select>
               </div>
             </div>
