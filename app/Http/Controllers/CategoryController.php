@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -50,7 +51,42 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Check validation
+       $this->validate($request,[
+        "title" => "required|string",
+        "summary" => "string|nullable",
+        "is_parent" => "sometimes|in:1",
+        "parent_id" => "nullable",
+        "status" => "nullable|in:active,inactive",
+       ]);
+
+       $data = new Category();
+
+       $data->title = $request->title;
+       $data->summary = $request->summary;
+       $data->photo = $request->photo;
+       $data->is_parent = $request->is_parent;
+       $data->parent_id = $request->parent_id;
+       $data->status = $request->status;
+      
+      $slug = Str::slug($request->title);
+
+       $data->slug =  $slug;
+
+       //return $data;
+       $existingSlug = Category::where('slug',$slug)->count();
+
+       if($existingSlug){
+           $slug = time().'-'.$slug;
+       } 
+
+      $result = $data->save();
+      if($result){
+       return redirect()->route('category.index')->with('success','Category inserted successfully');
+      }else{
+          return back()->with('error','Something went wrong');
+      }
+
     }
 
     /**

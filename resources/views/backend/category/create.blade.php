@@ -25,13 +25,16 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="{{ route('banner.store') }}">
+        <form class="form-horizontal" method="post" action="{{ route('category.store') }}">
           @csrf
           <div class="card-body">
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Title</label>
               <div class="col-sm-10">
                 <input type="text" name="title" value="{{ old('title')}}" class="form-control" id="inputEmail3" placeholder="Enter title">
+                @error('title')
+                <span class="text-danger">{{ $message }}</span>
+              @endif
               </div>
             </div>
             <div class="form-group row">
@@ -59,7 +62,7 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body"  style="min-height: 50%">
-                    <textarea id="summernote" name="description"> 
+                    <textarea id="summernote" name="summary"> 
                       
                     </textarea>
                   </div>
@@ -71,15 +74,15 @@
               <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
                 <label for="inputEmail3" class="">Is Parent</label>
-                <input type="checkbox" name="is_parent" value="1" >Yes
+                <input type="checkbox" name="is_parent" value="1" checked id="is_parent" >Yes
               </div>
             </div>
             
-            <div class="form-group row">
+            <div class="form-group row d-none" id="parent_cat_div">
               <label for="inputPassword3" class="col-sm-2 col-form-label">Parent Category</label>
               <div class="col-sm-10">
                 <select class="form-control" name="parent_id">
-                  <option>----select Category---</option>
+                  <option value="">----Select Parent Category---</option>
                   @foreach ($parentCategories as $item)
                       
                    <option value="{{ $item->id}}" {{ old('banner') == 'banner' ? 'selected' : ''}}>{{ $item->title}}</option>
@@ -92,7 +95,7 @@
               <label for="inputPassword3" class="col-sm-2 col-form-label">Status</label>
               <div class="col-sm-10">
                 <select class="form-control" name="status">
-                  <option>----select status---</option>
+                  <option value="">----select status---</option>
                   <option value="active" {{ old('active') =='active' ? 'selected' : ''}}>Active</option>
                   <option value="inactive" {{ old('inactive') =='inactive' ? 'selected' : ''}}>Inactive</option>
                 </select>
@@ -130,5 +133,21 @@
       theme: "monokai"
     });
   })
+</script>   
+
+<!-- Show or hide parent category-->
+<script>
+   $('#is_parent').change(function(e){
+    e.preventDefault();
+
+    var is_checked = $('#is_parent').prop('checked')
+
+    if(is_checked){
+      $('#parent_cat_div').addClass('d-none')
+    }else{
+      $('#parent_cat_div').removeClass('d-none')
+    }
+   })
+ 
 </script>   
 @endsection
