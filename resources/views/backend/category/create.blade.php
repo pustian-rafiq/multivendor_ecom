@@ -74,7 +74,7 @@
               <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
                 <label for="inputEmail3" class="">Is Parent</label>
-                <input type="checkbox" name="is_parent" value="1" checked id="is_parent" >Yes
+                <input type="checkbox" name="is_parent" value="true" checked id="is_parent" >Yes
               </div>
             </div>
             
@@ -85,7 +85,7 @@
                   <option value="">----Select Parent Category---</option>
                   @foreach ($parentCategories as $item)
                       
-                   <option value="{{ $item->id}}" {{ old('banner') == 'banner' ? 'selected' : ''}}>{{ $item->title}}</option>
+                   <option value="{{ $item->id}}" {{ old('parent_id') == $item->id ? 'selected' : ''}}>{{ $item->title}}</option>
                   @endforeach
                   
                 </select>

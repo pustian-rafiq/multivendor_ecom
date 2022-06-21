@@ -112,7 +112,7 @@ class CategoryController extends Controller
         if($category){
             return view('backend.category.edit',compact('category','parentCategories'));
         }else{
-            return "Category not found";
+            return back()->with("Category not found");
         }
     }
 
@@ -125,7 +125,44 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+// return $request->is_parent;
+          //Check validation
+       $this->validate($request,[
+        "title" => "required|string",
+        "summary" => "string|nullable",
+        
+        "parent_id" => "nullable",
+        "status" => "nullable|in:active,inactive",
+       ]);
+
+       $data = Category::find($id);
+
+       $data->title = $request->title;
+       $data->summary = $request->summary;
+       $data->photo = $request->photo;
+       $data->is_parent = $request->is_parent == 0 ? 1  :  $request->is_parent ;
+       $data->parent_id = $request->is_parent == 0 ? null : $request->is_parent;
+       $data->status = $request->status;
+      
+      $slug = Str::slug($request->title);
+
+       $data->slug =  $slug;
+
+       //return $data;
+       $existingSlug = Category::where('slug',$slug)->count();
+
+       if($existingSlug){
+           $slug = time().'-'.$slug;
+       } 
+       if($request->is_parent == 0){
+        $data->parent_id = null;
+       }
+      $result = $data->save();
+      if($result){
+       return redirect()->route('category.index')->with('success','Category updated successfully');
+      }else{
+          return back()->with('error','Something went wrong');
+      }
     }
 
     /**

@@ -25,8 +25,9 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="{{ route('category.update',$category->id) }}" enctype="multipart/form-data">
+        <form class="form-horizontal" method="POST" action="{{ route('category.update',$category->id) }}" enctype="multipart/form-data">
           @csrf
+          {{ method_field('PUT') }}
           <div class="card-body">
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Title</label>
@@ -46,7 +47,7 @@
                       <i class="fa fa-picture-o"></i> Choose
                     </a>
                   </span>
-                  <input id="thumbnail" class="form-control" type="text" name="photo">
+                  <input id="thumbnail" class="form-control" type="text" name="photo" value="{{ $category->photo }}">
                 </div>
                 <div id="holder" style="margin-top:25px;max-height:100px;"></div>
               </div>
@@ -74,18 +75,18 @@
               <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
                 <label for="inputEmail3" class="">Is Parent</label>
-                <input type="checkbox" name="is_parent" value="1" checked id="is_parent" >Yes
+                <input type="checkbox" name="is_parent" value="{{$category->is_parent}}" {{$category->is_parent == true ? 'checked' : ''}}  id="is_parent" >Yes
               </div>
             </div>
             
-            <div class="form-group row d-none" id="parent_cat_div">
+            <div class="form-group row {{ $category->is_parent ==1 ? 'd-none' : ''}}" id="parent_cat_div">
               <label for="inputPassword3" class="col-sm-2 col-form-label">Parent Category</label>
               <div class="col-sm-10">
                 <select class="form-control" name="parent_id">
                   <option value="">----Select Parent Category---</option>
                   @foreach ($parentCategories as $item)
                       
-                   <option value="{{ $item->id}}" {{ old('banner') == 'banner' ? 'selected' : ''}}>{{ $item->title}}</option>
+                   <option value="{{ $item->id}}" {{ $category->parent_id == $item->id ? 'selected' : ''}}>{{ $item->title }}</option>
                   @endforeach
                   
                 </select>
@@ -141,7 +142,6 @@
     e.preventDefault();
 
     var is_checked = $('#is_parent').prop('checked')
-
     if(is_checked){
       $('#parent_cat_div').addClass('d-none')
     }else{
