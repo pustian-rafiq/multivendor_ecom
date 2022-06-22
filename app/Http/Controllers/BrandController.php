@@ -114,7 +114,36 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         // return $request->all();
+         $this->validate($request,[
+            'title' => 'string|required',
+            'photo' => 'required',
+            'status' => 'nullable|in:active,inactive',
+        ]);
+
+        $data = Brand::find($id);
+
+        $data->title = $request->title;
+        $data->photo = $request->photo;
+        $data->status = $request->status;
+       
+        $slug = Str::slug($request->title);
+
+        $data->slug =  $slug;
+
+        //return $data;
+        $existingSlug = Brand::where('slug',$slug)->count();
+
+        if($existingSlug){
+            $slug = time().'-'.$slug;
+        } 
+
+       $result = $data->save();
+       if($result){
+        return redirect()->route('brand.index')->with('success','Brand updated successfully');
+       }else{
+           return back()->with('error','Something went wrong');
+       }
     }
 
     /**
@@ -125,6 +154,14 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Brand::find($id);
+
+        if($data){
+            $data->delete();
+            //unlink(public_path($data->photo));
+            return redirect()->route('brand.index')->with('success','Brand deleted successfully');
+        }else{
+            return redirect()->back()->with('error','Something went wrong');
+        }
     }
 }

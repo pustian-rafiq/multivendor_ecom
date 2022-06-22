@@ -25,8 +25,9 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="{{ route('brand.store') }}">
+        <form class="form-horizontal" method="post" action="{{ route('brand.update',$brand->id) }}">
           @csrf
+          {{ method_field('PUT') }}
           <div class="card-body">
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Title</label>
