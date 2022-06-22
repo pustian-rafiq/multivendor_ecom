@@ -101,7 +101,8 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand = Brand::find($id);
+        return view('backend.brand.edit',compact('brand'));
     }
 
     /**
