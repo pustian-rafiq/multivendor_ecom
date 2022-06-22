@@ -31,7 +31,7 @@
                 <tr>
                   <td>{{ $key+1}}</td>
                   <td>{{ $brand->title}}</td>
-                  <td>{{ $brand->slug}}</td>
+                  <td style="width: 20%">{{ $brand->slug}}</td>
                   <td>
                     <img src="{{ $brand->photo}}" alt="brand" height="70" width="70" />
                   </td>
@@ -110,7 +110,7 @@
     var id= $(this).val()
      //alert(id)
     $.ajax({
-      url: "{{ route('banner.status')}}",
+      url: "{{ route('brand.status')}}",
       type: "POST",
       data: {
         _token: '{{csrf_token()}}',

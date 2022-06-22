@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
@@ -38,7 +39,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.brand.create');
     }
 
     /**
@@ -49,7 +50,36 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        $this->validate($request,[
+            'title' => 'string|required',
+            'photo' => 'required',
+            'status' => 'nullable|in:active,inactive',
+        ]);
+
+        $data = new Brand();
+
+        $data->title = $request->title;
+        $data->photo = $request->photo;
+        $data->status = $request->status;
+       
+        $slug = Str::slug($request->title);
+
+        $data->slug =  $slug;
+
+        //return $data;
+        $existingSlug = Brand::where('slug',$slug)->count();
+
+        if($existingSlug){
+            $slug = time().'-'.$slug;
+        } 
+
+       $result = $data->save();
+       if($result){
+        return redirect()->route('brand.index')->with('success','Brand inserted successfully');
+       }else{
+           return back()->with('error','Something went wrong');
+       }
     }
 
     /**
