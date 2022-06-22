@@ -51,11 +51,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        //return$request->is_parent;
+        // return $request->all();
         //Check validation
        $this->validate($request,[
         "title" => "required|string",
         "summary" => "string|nullable",
-        "is_parent" => "sometimes|in:1",
         "parent_id" => "nullable",
         "status" => "nullable|in:active,inactive",
        ]);
@@ -65,7 +66,7 @@ class CategoryController extends Controller
        $data->title = $request->title;
        $data->summary = $request->summary;
        $data->photo = $request->photo;
-       $data->is_parent = $request->is_parent ? $request->is_parent : 0;
+       $data->is_parent = $request->is_parent == true ? 1 : 0;
        $data->parent_id = $request->parent_id;
        $data->status = $request->status;
       
@@ -125,12 +126,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-// return $request->is_parent;
+     return $request->all();
           //Check validation
        $this->validate($request,[
         "title" => "required|string",
         "summary" => "string|nullable",
-        
         "parent_id" => "nullable",
         "status" => "nullable|in:active,inactive",
        ]);
@@ -140,10 +140,17 @@ class CategoryController extends Controller
        $data->title = $request->title;
        $data->summary = $request->summary;
        $data->photo = $request->photo;
-       $data->is_parent = $request->is_parent == 0 ? 1  :  $request->is_parent ;
-       $data->parent_id = $request->is_parent == 0 ? null : $request->is_parent;
-       $data->status = $request->status;
       
+       
+       
+       $data->status = $request->status;
+       if( $request->is_parent == true){
+        $data->is_parent =  $request->is_parent;
+        $data->parent_id = null;
+      }else{
+        $data->is_parent =  0;
+        $data->parent_id = $request->parent_id;
+      }
       $slug = Str::slug($request->title);
 
        $data->slug =  $slug;
@@ -173,6 +180,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Category::find($id);
+
+        if($data){
+            $data->delete();
+            unlink(public_path($data->photo));
+            return redirect()->route('category.index')->with('success','Category deleted successfully');
+        }else{
+            return redirect()->back()->with('error','Something went wrong');
+        }
     }
 }

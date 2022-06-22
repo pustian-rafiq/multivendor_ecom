@@ -74,7 +74,7 @@
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
-                <label for="inputEmail3" class="">Is Parent</label>
+                <label for="inputEmail3" class="">Is Parent {{$category->is_parent == true ? "true" : "false"}}</label>
                 <input type="checkbox" name="is_parent" value="{{$category->is_parent}}" {{$category->is_parent == true ? 'checked' : ''}}  id="is_parent" >Yes
               </div>
             </div>
@@ -106,7 +106,7 @@
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <button type="submit" class="btn btn-info">Save Banner</button>
+            <button type="submit" class="btn btn-info">Save Category</button>
             {{-- <button type="submit" class="btn btn-default float-right">Cancel</button> --}}
           </div>
           <!-- /.card-footer -->
