@@ -52,13 +52,100 @@
                         <input type="checkbox" name="toogle" value="{{ $product->id }}" data-toggle="switchbutton" {{ ($product->status =='active' ? 'checked' : '') }} data-onlabel="Active" data-size="sm" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger">
                       </td>
                       <td>
-                        <a href="{{ route('product.edit',$product->id) }}" class="float-left btn btn-primary mr-1"><i class="fa fa-eye"></i></a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal{{$product->id}}" class="float-left btn btn-primary mr-1"><i class="fa fa-eye"></i></a>
                         <a href="{{ route('product.edit',$product->id) }}" class="float-left btn btn-success mr-1"><i class="fa fa-edit"></i></a>
                         <form action="{{ route('product.destroy',$product->id) }}" method="post">
                           @csrf
                           @method('delete')
                           <a href="" data-id="{{ $product->id }}" title="Delete" data-toggle="tooltip" class="btn btn-danger deleteBtn float-left"><i class="fa fa-trash"></i></a>
                         </form>
+
+                          <!--show product details -->
+                            <div class="modal fade" id="myModal{{$product->id}}">
+                              <div class="modal-dialog modal-dialog-centered  modal-lg">
+                                <div class="modal-content">
+                            <?php 
+                              $product = \App\Product::where('id',$product->id)->first();
+                            ?>
+                                  <!-- Modal Header -->
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Product Details</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+                            
+                                  <!-- Modal body -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-4">
+                                       <img src="{{ $product->photo }}" width="200" height="200" alt="">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="row">
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Product Title:</strong>
+                                            <span>{{ $product->title }}</span>
+                                          </div>
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Price:</strong>
+                                            <span>{{ $product->price }}</span>
+                                          </div>
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Discount:</strong>
+                                            <span>{{ $product->discount }}</span>
+                                          </div>
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Offer Price:</strong>
+                                            <span>{{ $product->offer_price }}</span>
+                                          </div>
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Brand:</strong>
+                                            <span>{{ \App\Brand::where('id',$product->brand_id)->value('title') }}</span>
+                                          </div>
+                                          <div class="col-md-6 mt-2">
+                                            <strong>category:</strong>
+                                            <span>{{ \App\Category::where('id',$product->cat_id)->value('title') }}</span>
+                                          </div>
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Size:</strong>
+                                            <span class="badge badge-secondary">{{ $product->size }}</span>
+                                          </div>
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Conditions:</strong>
+                                            <span>{{ $product->conditions }}</span>
+                                          </div>
+                                          
+                                          <div class="col-md-6 mt-2">
+                                            <strong>Status:</strong>
+                                            <span class="badge badge-success">{{ $product->status }}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                     
+                                    </div>
+                                    <div class="row mt-4 text-justify px-5">
+                                      <div class="col-md-12">
+                                        <strong>Summary:</strong>
+                                        <span>{{ $product->summary }}</span>
+                                      </div>
+                                    </div>
+                                    <div class="row mt-4  text-justify px-5">
+                                      <div class="col-md-12">
+                                        <strong>Description:</strong>
+                                        <span>{{ $product->description }}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                            
+                                  <!-- Modal footer -->
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                            
+                                </div>
+                              </div>
+                            </div>
+                            
                       </td>
                     </tr>
                  @endforeach
@@ -80,6 +167,9 @@
               </table>
             </div>
             <!-- /.card-body -->
+
+          
+
           </div>
     </div><!-- /.container-fluid -->
   </section>
