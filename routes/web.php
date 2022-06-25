@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,4 +42,8 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     //Brand routes
     Route::resource('/brand', 'BrandController');
     Route::post('/brand/status',[BrandController::class,'ChangeStatus'])->name('brand.status');
+
+    //Product routes
+    Route::resource('/product', 'ProductController');
+    Route::post('/brand/status',[ProductController::class,'ChangeStatus'])->name('product.status');
 });
