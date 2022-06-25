@@ -73,8 +73,8 @@
               <div class="col-sm-10">
                 <select class="form-control" name="condition">
                   <option>----select condition---</option>
-                  <option value="banner" {{ old('banner') == 'banner' ? 'selected' : ''}}>Banner</option>
-                  <option value="promo" {{ old('promo') =='promo' ? 'selected' : ''}}>Promote</option>
+                  <option value="banner" {{ old('condition') == 'banner' ? 'selected' : ''}}>Banner</option>
+                  <option value="promo" {{ old('condition') =='promo' ? 'selected' : ''}}>Promote</option>
                 </select>
               </div>
             </div>
@@ -83,8 +83,8 @@
               <div class="col-sm-10">
                 <select class="form-control" name="status">
                   <option>----select status---</option>
-                  <option value="active" {{ old('active') =='active' ? 'selected' : ''}}>Active</option>
-                  <option value="inactive" {{ old('inactive') =='inactive' ? 'selected' : ''}}>Inactive</option>
+                  <option value="active" {{ old('status') =='active' ? 'selected' : ''}}>Active</option>
+                  <option value="inactive" {{ old('status') =='inactive' ? 'selected' : ''}}>Inactive</option>
                 </select>
               </div>
             </div>

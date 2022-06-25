@@ -38,6 +38,9 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     //Category routes
     Route::resource('/category', 'CategoryController');
     Route::post('/category/status',[CategoryController::class,'ChangeStatus'])->name('category.status');
+    
+    //Get child catgeory by using child category id
+    Route::post('/category/{id}/child',[CategoryController::class, 'getChildByParentID']);
 
     //Brand routes
     Route::resource('/brand', 'BrandController');
@@ -45,5 +48,5 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 
     //Product routes
     Route::resource('/product', 'ProductController');
-    Route::post('/brand/status',[ProductController::class,'ChangeStatus'])->name('product.status');
+    Route::post('/product/status',[ProductController::class,'ChangeStatus'])->name('product.status');
 });

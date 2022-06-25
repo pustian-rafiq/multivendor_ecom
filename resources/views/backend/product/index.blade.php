@@ -10,8 +10,8 @@
                 </div>
 
             <div class="card-header">
-              <h3 class="card-title">All Banners</h3>
-              <a href="{{ route('banner.create') }}" class="btn btn-success" style="float:right">Add Banner</a>
+              <h3 class="card-title">All Products</h3>
+              <a href="{{ route('product.create') }}" class="btn btn-success" style="float:right">Add Product</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -126,7 +126,7 @@
     var id= $(this).val()
      //alert(id)
     $.ajax({
-      url: "{{ route('banner.status')}}",
+      url: "{{ route('product.status')}}",
       type: "POST",
       data: {
         _token: '{{csrf_token()}}',

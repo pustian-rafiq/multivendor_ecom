@@ -190,4 +190,34 @@ class CategoryController extends Controller
             return redirect()->back()->with('error','Something went wrong');
         }
     }
+
+    //Get child category by parent category id
+
+    public function getChildByParentID(Request $request, $id){
+        $category = Category::find($id);
+
+        if($category){
+            $child_id = Category::getChildByParentID($id);
+
+            if(count($child_id) <= 0){
+                return response()->json([
+                    'status' => false,
+                    'data' => null,
+                    'msg' => ""
+                ]);
+            }
+            return response()->json([
+                'status' => true,
+                'data' => $child_id,
+                'msg' => ""
+            ]);
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'data' => null,
+                'msg' => "Category not found"
+            ]);
+        }
+    }
 }

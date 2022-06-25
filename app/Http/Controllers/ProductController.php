@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Category;
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -18,6 +22,18 @@ class ProductController extends Controller
         return view('backend.product.index',compact('products'));
     }
 
+
+     // Chnage product status
+     public function ChangeStatus(Request $request){
+       
+        if($request->mode =='true'){
+            DB::table('products')->where('id',$request->id)->update(['status'=>'active']);
+        }else{
+            DB::table('products')->where('id',$request->id)->update(['status'=>'inactive']);
+        }
+        return response()->json(['msg'=>'Status updated successfully','status'=>true]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -25,7 +41,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::all();
+        $categories = Category::all();
+        $vendors = User::where('role','vendor')->get();
+        return view('backend.product.create',compact('brands','categories','vendors'));
     }
 
     /**
