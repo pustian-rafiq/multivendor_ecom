@@ -110,10 +110,10 @@
             <div class="form-group row">
               <label for="inputPassword3" class="col-sm-2 col-form-label">Brand</label>
               <div class="col-sm-10">
-                <select class="form-control" name="condition">
+                <select  class="form-control" name="brand_id">
                   <option>----select Brand---</option>
                   @foreach($brands as $brand)
-                  <option value="{{ $brand->id}}" {{ old('banner') == 'banner' ? 'selected' : ''}}>{{ $brand->title }}</option>
+                  <option value="{{ $brand->id}}">{{ $brand->title }}</option>
                 @endforeach
                 </select>
               </div>
@@ -155,7 +155,7 @@
               <label for="inputPassword3" class="col-sm-2 col-form-label">Conditions</label>
               <div class="col-sm-10">
                 <select class="form-control" name="conditions">
-                  <option>----Select Conditions---</option>
+                  <option>---Select Conditions---</option>
                   <option value="new" {{ old('conditions') =='new' ? 'selected' : ''}}>New</option>
                   <option value="winter" {{ old('conditions') =='winter' ? 'selected' : ''}}>Winter</option>
                   <option value="popular" {{ old('conditions') =='popular' ? 'selected' : ''}}>Popular</option>
@@ -166,7 +166,7 @@
             <div class="form-group row">
               <label for="inputPassword3" class="col-sm-2 col-form-label">Vendor</label>
               <div class="col-sm-10">
-                <select class="form-control" name="conditions">
+                <select class="form-control" name="vendor_id">
                   <option>----Select Vendor---</option>
                   @foreach($vendors as $vendor)
                   <option value="{{ $vendor->id }}" {{ old('vendors') =='new' ? 'selected' : ''}}>{{ $vendor->full_name }}</option>

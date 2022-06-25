@@ -52,11 +52,12 @@
                         <input type="checkbox" name="toogle" value="{{ $product->id }}" data-toggle="switchbutton" {{ ($product->status =='active' ? 'checked' : '') }} data-onlabel="Active" data-size="sm" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger">
                       </td>
                       <td>
-                        <a href="{{ route('product.edit',$product->id) }}" class="float-left btn btn-success mr-1">Edit</a>
+                        <a href="{{ route('product.edit',$product->id) }}" class="float-left btn btn-primary mr-1"><i class="fa fa-eye"></i></a>
+                        <a href="{{ route('product.edit',$product->id) }}" class="float-left btn btn-success mr-1"><i class="fa fa-edit"></i></a>
                         <form action="{{ route('product.destroy',$product->id) }}" method="post">
                           @csrf
                           @method('delete')
-                          <a href="" data-id="{{ $product->id }}" title="Delete" data-toggle="tooltip" class="btn btn-danger deleteBtn float-left">Delete</a>
+                          <a href="" data-id="{{ $product->id }}" title="Delete" data-toggle="tooltip" class="btn btn-danger deleteBtn float-left"><i class="fa fa-trash"></i></a>
                         </form>
                       </td>
                     </tr>

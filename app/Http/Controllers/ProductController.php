@@ -8,6 +8,7 @@ use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -55,7 +56,62 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //return $request->all();
+        $this->validate($request,[
+            'title' => 'required|string',
+            'summary' => 'required|string',
+            'description' => 'required|nullable',
+            'stock' => 'nullable|numeric',
+            'price' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'photo' => 'required',
+            'brand_id' => 'nullable',
+            'cat_id' => 'required|exists:categories,id',
+            'child_cat_id' => 'nullable|exists:categories,id',
+            'size' => 'nullable',
+            'conditions' => 'nullable|in:new,winter,popular',
+            'status' => 'nullable|in:active,inactive',
+        ]);
+
+        $data = new Product();
+
+        $data->title = $request->title;
+        $data->summary = $request->summary;
+        $data->description = $request->description;
+        $data->stock = $request->stock;
+        $data->price = $request->price;
+        $data->discount = $request->discount;
+        $data->photo = $request->photo;
+        $data->cat_id = $request->cat_id;
+        $data->brand_id = $request->brand_id;
+        $data->vendor_id = $request->vendor_id;
+        $data->child_cat_id = $request->child_cat_id;
+        $data->size = $request->size;
+        $data->conditions = $request->conditions;
+        $data->status = $request->status;
+       
+        $data->offer_price = $request->price - ($request->price * $request->discount)/100;
+        $slug = Str::slug($request->title);
+ 
+        $data->slug =  $slug;
+ 
+        //return $data;
+        $existingSlug = Product::where('slug',$slug)->count();
+ 
+        if($existingSlug){
+            $slug = time().'-'.$slug;
+        } 
+ 
+       $result = $data->save();
+
+       if($result){
+        return redirect()->route('product.index')->with('success','Product inserted successfully');
+       }else{
+           return back()->with('error','Something went wrong');
+       }
+
+
     }
 
     /**
