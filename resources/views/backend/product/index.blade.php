@@ -31,11 +31,16 @@
                 </thead>
                 <tbody>
                  @foreach($products as $key => $product)
+                 <!--When we upload multiple image, and want to show one image then we explode the image and show it-->
+                 <?php
+                   $photo = explode(',', $product->photo);
+                 ?>
                     <tr>
                       <td>{{ $key+1}}</td>
                       <td>{{ $product->title}}</td>
                       <td>
                         <img src="{{ $product->photo}}" alt="brand" height="70" width="70" />
+                        {{-- <img src="{{ $photo[0]}}" alt="brand" height="70" width="70" /> --}}
                       </td>
                       <td >{{ $product->price}}</td>
                       <td >{{ $product->discount}}</td>
