@@ -33,7 +33,7 @@
                     <tr>
                       <td>{{ $key+1}}</td>
                       <td>
-                        <img src="{{ $user->photo}}" alt="user" style="max-height: 90px; max-width:120px; broder-radius:50%"  />
+                        <img src="{{ $user->photo}}" alt="user" style="height:90px; width:90px; border-radius:50%"  />
                       </td>
                       <td >{{ $user->full_name}}</td>
                       <td >{{ $user->email}}</td>
@@ -59,16 +59,15 @@
                             <?php 
                               $user = \App\User::where('id',$user->id)->first();
                             ?>
-                                  
-                            
                                   <!-- Modal body -->
                                    <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-12 text-center">
-                                            <img src="{{ $user->photo }}" style="max-height: 100px; max-width:120px; broder-radius:50%" alt="">
+                                            <img src="{{ $user->photo }}" style="height: 120px; width:120px; border-radius:50%" alt="">
+                                            <h4>Username: {{$user->username}}</h4> 
+                                            <h4>Full Name: {{$user->full_name}}</h4>
                                          </div>
-                                         <h4>Username: {{$user->username}}</h4> <br>
-                                         <h4>Full Name: {{$user->full_name}}</h4>
+                                        
                                     </div>
                                         <div class="row">
                                           <div class="col-md-6 mt-2">
