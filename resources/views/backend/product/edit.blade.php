@@ -27,6 +27,7 @@
         <!-- form start -->
         <form class="form-horizontal" method="post" action="{{ route('product.update',$product->id) }}">
           @csrf
+          {{ method_field('PUT') }}
           <div class="card-body">
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Title</label>
@@ -222,8 +223,11 @@
 
 {{-- Get child category after selecting the parent category --}}
 <script>
+     var child_cat_id = {{ $product->child_cat_id}}
+        console.log(child_cat_id)
     $('#cat_id').change(function(){
-
+       
+        //alert(child_cat_id)
         var cat_id = $(this).val();
 
         if(cat_id != null){
@@ -237,13 +241,14 @@
 
             success: function(response){
                     var html_option = "<option value=''>---Select Child Category---</option>";
-                    console.log(response)
+                    
                     if(response.status){
-                        console.log("if")
                         $('#child_cat_div').removeClass('d-none');
 
                         $.each(response.data, function(id,title){
-                            html_option += "<option value='"+id+"'>"+title+"</option>"
+                            console.log(id)
+                            console.log(child_cat_id)
+                            html_option += "<option value='"+id+"' "+(child_cat_id==id ? 'selected' : '') +">"+title+"</option>"
                         });
                     }else{
                         console.log("else")
@@ -257,5 +262,11 @@
         }
 
     });
+
+    //Get child category id and call parent category
+    if(child_cat_id != null){
+      
+    $('#cat_id').change();
+}
 </script>
 @endsection
