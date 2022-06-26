@@ -126,6 +126,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = User::find($id);
+
+        if($data){
+            $data->delete();
+            //unlink(public_path($data->photo));
+            return redirect()->route('user.index')->with('success','User deleted successfully');
+        }else{
+            return redirect()->back()->with('error','Something went wrong');
+        }
     }
 }
