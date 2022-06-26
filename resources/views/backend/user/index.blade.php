@@ -65,10 +65,10 @@
                                    <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-12 text-center">
-                                            <img src="{{ $user->photo }}" style="max-height: 90px; max-width:120px; broder-radius:50%" alt="">
+                                            <img src="{{ $user->photo }}" style="max-height: 100px; max-width:120px; broder-radius:50%" alt="">
                                          </div>
-                                         <h3>Username: {{$user->username}}</h3>
-                                         <h3>Full Name: {{$user->full_name}}</h3>
+                                         <h4>Username: {{$user->username}}</h4> <br>
+                                         <h4>Full Name: {{$user->full_name}}</h4>
                                     </div>
                                         <div class="row">
                                           <div class="col-md-6 mt-2">

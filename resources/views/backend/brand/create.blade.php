@@ -56,8 +56,8 @@
               <div class="col-sm-10">
                 <select class="form-control" name="status">
                   <option>----select status---</option>
-                  <option value="active" {{ old('active') =='active' ? 'selected' : ''}}>Active</option>
-                  <option value="inactive" {{ old('inactive') =='inactive' ? 'selected' : ''}}>Inactive</option>
+                  <option value="active" {{ old('role') =='active' ? 'selected' : ''}}>Active</option>
+                  <option value="inactive" {{ old('role') =='inactive' ? 'selected' : ''}}>Inactive</option>
                 </select>
               </div>
             </div>

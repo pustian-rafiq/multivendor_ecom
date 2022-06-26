@@ -171,12 +171,12 @@
               <p>All Users</p>
             </a>
           </li>
-          {{-- <li class="nav-item">
-            <a href="{{ route('product.create') }}" class="nav-link">
+          <li class="nav-item">
+            <a href="{{ route('user.create') }}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Add New User</p>
             </a>
-          </li> --}}
+          </li>
         </ul>
       </li>
 

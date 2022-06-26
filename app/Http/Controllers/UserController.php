@@ -38,7 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.user.create');
     }
 
     /**
@@ -49,7 +49,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            "username" => "nullable|string",
+            "full_name" => "required|string",
+            "email" => "required|email|unique:users,email",
+            "password" => "required|min:6",
+            "phone" => "nullable|string",
+            "photo" => "required",
+            "address" => "nullable|string",
+            "role" => "required|in:admin.vendor,customer",
+            "status" => "required|in:active,inactive",
+        ]);
+
+
+        $data = new User();
+
+        $data->full_name = $request->full_name;
+        $data->username = $request->username;
+        $data->email = $request->email;
+        $data->password = $request->password;
+        $data->phone = $request->phone;
+        $data->photo = $request->photo;
+        $data->address = $request->address;
+        $data->role = $request->role;
+        $data->status = $request->status;
+       
+         
+       $result = $data->save();
+       if($result){
+        return redirect()->route('user.index')->with('success','User is inserted successfully');
+       }else{
+           return back()->with('error','Something went wrong');
+       }
     }
 
     /**
