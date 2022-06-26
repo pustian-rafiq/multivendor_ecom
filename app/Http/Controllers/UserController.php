@@ -115,7 +115,41 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = User::find($id);
+
+       // return $data->id;
+        $this->validate($request,[
+            "username" => "nullable|string",
+            "full_name" => "required|string",
+            "email" => "required|email|unique:users,email,".$data->id,
+            "password" => "required|min:6",
+            "phone" => "nullable|string",
+            "photo" => "required",
+            "address" => "nullable|string",
+            "role" => "required|in:admin.vendor,customer",
+            "status" => "required|in:active,inactive",
+        ]);
+
+
+       
+
+        $data->full_name = $request->full_name;
+        $data->username = $request->username;
+        $data->email = $request->email;
+        $data->password = $request->password;
+        $data->phone = $request->phone;
+        $data->photo = $request->photo;
+        $data->address = $request->address;
+        $data->role = $request->role;
+        $data->status = $request->status;
+       
+         
+       $result = $data->save();
+       if($result){
+        return redirect()->route('user.index')->with('success','User is updated successfully');
+       }else{
+           return back()->with('error','Something went wrong');
+       }
     }
 
     /**
